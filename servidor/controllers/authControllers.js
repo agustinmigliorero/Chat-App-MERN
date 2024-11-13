@@ -9,7 +9,10 @@ const login = async (req, res) => {
     const user = await User.findOne({ username });
 
     if (!user) {
-      return res.status(400).json({ message: "Credenciales invalidas" });
+      return res.status(400).json({
+        message: "Credenciales invalidas",
+        error: "Credenciales invalidas",
+      });
     }
 
     const userPassword = user.password ? user.password : "";
@@ -17,7 +20,10 @@ const login = async (req, res) => {
     const isPasswordCorrect = await bcryptjs.compare(password, userPassword);
 
     if (!isPasswordCorrect) {
-      return res.status(400).json({ message: "Credenciales invalidas" });
+      return res.status(400).json({
+        message: "Credenciales invalidas",
+        error: "Credenciales invalidas",
+      });
     }
 
     generateTokenAndSetCookie(user._id, res);
@@ -31,7 +37,10 @@ const login = async (req, res) => {
     });
   } catch (error) {
     console.log(error.message);
-    res.status(500).json({ message: "Error del servidor al iniciar sesion" });
+    res.status(500).json({
+      message: "Error del servidor al iniciar sesion",
+      error: "Error del servidor al iniciar sesion",
+    });
   }
 };
 
@@ -42,7 +51,10 @@ const logout = (req, res) => {
     res.status(200).json({ message: "Logout exitoso" });
   } catch (error) {
     console.log(error.message);
-    res.status(500).json({ message: "Error del servidor al desconectarse" });
+    res.status(500).json({
+      message: "Error del servidor al desconectarse",
+      error: "Error del servidor al desconectarse",
+    });
   }
 };
 
@@ -57,9 +69,10 @@ const signup = async (req, res) => {
     const user = await User.findOne({ username });
 
     if (user) {
-      return res
-        .status(400)
-        .json({ message: "El nombre de usuario ya existe" });
+      return res.status(400).json({
+        message: "El nombre de usuario ya existe",
+        error: "El nombre de usuario ya existe",
+      });
     }
 
     // Encriptar la contraseña
@@ -79,7 +92,10 @@ const signup = async (req, res) => {
     });
 
     if (!newUser) {
-      return res.status(400).json({ message: "Error al crear el usuario" });
+      return res.status(400).json({
+        message: "Error al crear el usuario",
+        error: "Error al crear el usuario",
+      });
     }
 
     generateTokenAndSetCookie(newUser._id, res);
@@ -87,15 +103,20 @@ const signup = async (req, res) => {
 
     res.status(201).json({
       message: "Usuario creado exitosamente",
-      _id: newUser._id,
-      username: newUser.username,
-      fullName: newUser.fullName,
-      gender: newUser.gender,
-      profilePic: newUser.profilePic,
+      user: {
+        _id: newUser._id,
+        username: newUser.username,
+        fullName: newUser.fullName,
+        gender: newUser.gender,
+        profilePic: newUser.profilePic,
+      },
     });
   } catch (error) {
     console.log(error.message);
-    res.status(500).json({ message: "Error del servidor al crear el usuario" });
+    res.status(500).json({
+      message: "Error del servidor al crear el usuario",
+      error: "Error del servidor al crear el usuario",
+    });
   }
 };
 
