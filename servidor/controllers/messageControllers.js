@@ -24,7 +24,7 @@ const sendMessage = async (req, res) => {
     });
 
     if (newMessage) {
-      conversation.messages.push(newMessage);
+      conversation.messages.push(newMessage._id);
     }
 
     //ACA VA A IR LA FUNCIONALIDAD CON WEBSOCKETS
