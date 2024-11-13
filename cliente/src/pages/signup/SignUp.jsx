@@ -111,8 +111,15 @@ function SignUp() {
           </Link>
 
           <div>
-            <button className="btn btn-block btn-sm mt-2 bg-gray-800 text-gray-300 border-gray-900 hover:bg-gray-900">
-              Registrarse
+            <button
+              className="btn btn-block btn-sm mt-2 bg-gray-800 text-gray-300 border-gray-900 hover:bg-gray-900"
+              disabled={loading}
+            >
+              {loading ? (
+                <span className="loading loading-spinner"></span>
+              ) : (
+                "Registrarse"
+              )}
             </button>
           </div>
         </form>

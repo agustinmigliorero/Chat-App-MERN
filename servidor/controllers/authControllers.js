@@ -30,10 +30,13 @@ const login = async (req, res) => {
 
     res.status(200).json({
       message: "Login exitoso",
-      _id: user._id,
-      username,
-      fullName: user.fullName,
-      profilePic: user.profilePic,
+      user: {
+        _id: user._id,
+        username,
+        fullName: user.fullName,
+        gender: user.gender,
+        profilePic: user.profilePic,
+      },
     });
   } catch (error) {
     console.log(error.message);
