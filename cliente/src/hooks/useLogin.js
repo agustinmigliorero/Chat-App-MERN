@@ -8,6 +8,15 @@ function useLogin() {
   const { setAuthUser } = useAuthContext();
 
   const login = async (username, password) => {
+    const success = handleInputErrors({
+      username,
+      password,
+    });
+
+    if (!success) {
+      return;
+    }
+    setLoading(true);
     try {
       const response = await fetch("/api/auth/login", {
         method: "POST",
@@ -39,3 +48,17 @@ function useLogin() {
 }
 
 export default useLogin;
+
+function handleInputErrors({ username, password }) {
+  if (!username || !password) {
+    toast.error("Todos los campos son obligatorios");
+    return false;
+  }
+
+  if (password.length < 6) {
+    toast.error("La contraseña debe tener al menos 6 caracteres");
+    return false;
+  }
+
+  return true;
+}
