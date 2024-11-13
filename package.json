@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "server": "nodemon servidor/server.js"
+    "server": "nodemon servidor/server.js",
+    "start": "node servidor/server.js",
+    "build": "npm install && npm install --prefix cliente && npm run build --prefix cliente"
   },
   "keywords": [],
   "author": "",

@@ -20,7 +20,6 @@ function useGetMessages() {
           }
         );
         const data = await response.json();
-        console.log(data);
 
         if (data.error) {
           throw new Error(data.error);
